@@ -3,7 +3,12 @@ from PIL import Image
 
 from config.urlConf import urls
 from myUrllib.httpUtils import HTTPClient
-from verify.localVerifyCode import verify
+from verify.localVerifyCode import Verify
+import TickerConfig
+
+
+if TickerConfig.AUTO_CODE_TYPE == 2:
+    v = Verify()
 
 
 def getRandCode(is_auto_code, auto_code_type, result):
@@ -17,7 +22,7 @@ def getRandCode(is_auto_code, auto_code_type, result):
                 print(u"打码兔已关闭, 如需使用自动识别，请使用如果平台 auto_code_type == 2")
                 return
             elif auto_code_type == 2:
-                Result = verify(result)
+                Result = v.verify(result)
                 return codexy(Ofset=Result, is_raw_input=False)
             elif auto_code_type == 3:
                 print("您已设置使用云打码，但是服务器资源有限，请尽快改为本地打码")
